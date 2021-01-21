@@ -1,4 +1,4 @@
--VizualisationOfMassiveData-Veyxzer
+# Vizualisation Of Massive Data Veyxzer
 
 ### Variables in order:
 
@@ -19,7 +19,7 @@ LSTAT    % lower status of the population
 MEDV     Median value of owner-occupied homes in $1000's
 ```
 
-Members :
+### Members :
 - Quentin Payre (quentin.payre@epitech.eu)
 - Yoann Ditte (yoann.ditte@epitech.eu)
 - Pierre Leriche (pierre.leriche@epitech.eu)
