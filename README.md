@@ -1,6 +1,8 @@
 -VizualisationOfMassiveData-Veyxzer
 
-Variables in order:
+### Variables in order:
+
+```
 CRIM     per capita crime rate by town
 ZN       proportion of residential land zoned for lots over 25,000 sq.ft.
 INDUS    proportion of non-retail business acres per town
@@ -15,6 +17,7 @@ PTRATIO  pupil-teacher ratio by town
 B        1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
 LSTAT    % lower status of the population
 MEDV     Median value of owner-occupied homes in $1000's
+```
 
 Members :
 - Quentin Payre (quentin.payre@epitech.eu)
