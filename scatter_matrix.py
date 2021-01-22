@@ -10,8 +10,10 @@ df = pd.read_csv("./data.csv", sep=",")
 
 # plt.savefig('ScatterMatrix')
 columns = list(df.columns)
+columns.remove('MEDV')
 
-sns.PairGrid(df, hue='MEDV', vars=columns, corner=True).map(plt.scatter)
+sns.PairGrid(df, hue='MEDV', vars=columns, corner=True,
+             palette=sns.color_palette("Spectral")).map(plt.scatter)
 
 title = 'Scatter matrix of the Boston Housing dataset'
 filename = 'housing_scatter_matrix.pdf'
