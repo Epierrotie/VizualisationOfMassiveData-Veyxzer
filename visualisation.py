@@ -3,15 +3,15 @@ import csv
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-
-fileName = 'data.csv'
+# sns.set(style="ticks")
 
 df = pd.read_csv("./data.csv", sep=",")
 
-sns.pairplot(df, hue="MEDV")
+# sns.pairplot(df)
 
-title = 'Scatter matrix of the houses value'
-filename = 'test.pdf'
+# plt.savefig('ScatterMatrix')
+print(df.columns)
 
-plt.title(title)
-plt.savefig(filename)
+sns.PairGrid(df, hue='B', vars=df.columns, corner=True).map(plt.scatter)
+
+plt.savefig('test')
