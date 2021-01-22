@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 
 from sklearn.metrics import make_scorer
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import cross_val_predict
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
@@ -122,6 +122,14 @@ if __name__ == '__main__':
         print('RMSE is {}'.format(rmse))
         print('R2 score is {}'.format(r2))
         print("\n")
+
+        predicted = cross_val_predict(lin_model, X, y,cv=10)
+        fig,ax = plt.subplots()
+        ax.scatter(y, predicted, edgecolors=(0,0,0))
+        ax.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=4)
+        ax.set_xlabel('Mesured')
+        ax.set_ylabel('Predicted')
+        plt.savefig('res.png')
     except Exception as e:
         print(e)
         pass
