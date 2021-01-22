@@ -22,17 +22,6 @@ from sklearn.model_selection import GridSearchCV
     B        1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
 """
 
-from keras import models
-from keras import layers
-
-def build_model(y_train):
-    model = models.Sequential()
-    model.add(layers.Dense(64, activation='relu',input_shape=(y_train.shape[1],)))
-    model.add(layers.Dense(64, activation='relu'))
-    model.add(layers.Dense(1))
-    model.compile(optimizer='rmsprop', loss='mse', metrics=['mae'])
-    return model
-
 if __name__ == '__main__':
     df = pd.read_csv('data.csv')
     prices = df['MEDV']
@@ -69,45 +58,50 @@ if __name__ == '__main__':
         print('Stat error : '+str(e))
         pass
 
-    try:
-        """ Corrélations des datas : pour choisir quelles features sont les + pertinentes """
-
-        snsPlot = sns.heatmap(df.corr().round(2),cmap='coolwarm',annot=True)
-        fig = snsPlot.get_figure()
-        fig.savefig("./Prediction/correlations.png")
-    except Exception as e:
-        print('Correlation error : '+str(e))
-        pass
-
-    try:
-        """ Moyenne (trait plein) et Mediane (pointillés) """
-
-        clr = ['blue', 'green', 'red', 'yellow', 'orange', 'purple']
-        plt.figure(1)
-        for i, var in enumerate(['ZN', 'CHAS', 'RM', 'DIS', 'B']): #, 'DIS', 'B'
-            sns.displot(df[var],  color = clr[i])
-            plt.axvline(df[var].mean(), color=clr[5], linestyle='solid', linewidth=2)
-            plt.axvline(df[var].median(), color=clr[5], linestyle='dashed', linewidth=2)
-            plt.savefig('./Prediction/{0}.png'.format(var))
-    except Exception as e:
-        print('K Fold CV error : '+str(e))
-        pass
-
     # try:
-    #     """ Scatter plots Prices vs fetures """
-    #     for i, var in enumerate(['ZN', 'CHAS', 'RM', 'DIS', 'B']):
-    #         fig1=[]
-    #         lm = sns.regplot(df[var], prices, ax = None, color=clr[i])
-    #         lm.set(ylim=(0, 100))
-    #         fig1.append(lm.get_figure())
-    #         fig1[0].savefig('./Prediction/{0}PriceTrend.png'.format(var))
+    #     """ Corrélations des datas : pour choisir quelles features sont les + pertinentes """
+
+    #     snsPlot = sns.heatmap(df.corr().round(2),cmap='coolwarm',annot=True)
+    #     fig = snsPlot.get_figure()
+    #     fig.savefig("./Prediction/correlations.png")
     # except Exception as e:
-    #     print('Scatter plots error : '+str(e))
+    #     print('Correlation error : '+str(e))
     #     pass
 
+    # try:
+    #     """ Moyenne (trait plein) et Mediane (pointillés) """
+
+    #     clr = ['blue', 'green', 'red', 'yellow', 'orange', 'purple']
+    #     plt.figure(1)
+    #     for i, var in enumerate(['ZN', 'CHAS', 'RM', 'DIS', 'B']): #, 'DIS', 'B'
+    #         sns.displot(df[var],  color = clr[i])
+    #         plt.axvline(df[var].mean(), color=clr[5], linestyle='solid', linewidth=2)
+    #         plt.axvline(df[var].median(), color=clr[5], linestyle='dashed', linewidth=2)
+    #         plt.savefig('./Prediction/{0}.png'.format(var))
+    # except Exception as e:
+    #     print('K Fold CV error : '+str(e))
+    #     pass
+
+    # # try:
+    # #     """ Scatter plots Prices vs fetures """
+    # #     for i, var in enumerate(['ZN', 'CHAS', 'RM', 'DIS', 'B']):
+    # #         fig1=[]
+    # #         lm = sns.regplot(df[var], prices, ax = None, color=clr[i])
+    # #         lm.set(ylim=(0, 100))
+    # #         fig1.append(lm.get_figure())
+    # #         fig1[0].savefig('./Prediction/{0}PriceTrend.png'.format(var))
+    # # except Exception as e:
+    # #     print('Scatter plots error : '+str(e))
+    # #     pass
+
     try:
-        SelectedColumns=['ZN', 'CHAS', 'RM', 'DIS', 'B']
-        X_train, X_test, y_train, y_test = train_test_split(prices, features, test_size = 0.2, random_state = 0)
+        SelectedFeatures=['RM', 'LSTAT', 'PTRATIO']
+        X = df[SelectedFeatures] #df[SelectedFeatures]
+        y = prices
+        for var in ['RM', 'LSTAT', 'PTRATIO']:
+            sns.regplot(df[var], prices)
+            plt.show()
+        train_X, test_X, train_y, test_y = train_test_split(X, y, test_size = 0.2, random_state = 0)
         print('done')
     except Exception as e:
         print(e)
