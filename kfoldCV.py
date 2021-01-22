@@ -13,6 +13,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import make_scorer
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
 
 """ 
     ZN       proportion of residential land zoned for lots over 25,000 sq.ft.
@@ -96,13 +99,19 @@ if __name__ == '__main__':
 
     try:
         SelectedFeatures=['RM', 'LSTAT', 'PTRATIO']
-        X = df[SelectedFeatures] #df[SelectedFeatures]
+        X = df[SelectedFeatures]
         y = prices
-        for var in ['RM', 'LSTAT', 'PTRATIO']:
-            sns.regplot(df[var], prices)
-            plt.show()
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size = 0.2, random_state = 0)
-        print('done')
+        lin_model = LinearRegression()
+        lin_model.fit(train_X, train_y)
+        y_train_predict = lin_model.predict(train_X)
+        rmse = (np.sqrt(mean_squared_error(train_y, y_train_predict)))
+        r2 = r2_score(train_y, y_train_predict)
+        print("The model performance for training set")
+        print("--------------------------------------")
+        print('RMSE is {}'.format(rmse))
+        print('R2 score is {}'.format(r2))
+        print("\n")
     except Exception as e:
         print(e)
         pass
