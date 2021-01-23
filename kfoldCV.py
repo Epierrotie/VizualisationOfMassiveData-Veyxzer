@@ -7,35 +7,18 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from sklearn import preprocessing
-from sklearn.model_selection import train_test_split
-
-from sklearn.metrics import make_scorer
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.model_selection import cross_val_predict
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_predict
 
-""" 
-    ZN       proportion of residential land zoned for lots over 25,000 sq.ft.
-    CHAS     Charles River dummy variable (= 1 if tract bounds river; 0 otherwise)
-    RM       average number of rooms per dwelling
-    DIS      weighted distances to five Boston employment centres
-    B        1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
-"""
 
 if __name__ == '__main__':
+    """ 1.2.2 Quantitative analysis """
     df = pd.read_csv('data.csv')
     prices = df['MEDV']
     features = df.drop('MEDV', axis = 1)
-
-    try:
-        """ Normalisation des datas """
-        data = preprocessing.scale(features)
-    except Exception as e:
-        print(e)
-        pass
 
     try:
         """ Print quelques stats """
@@ -61,43 +44,19 @@ if __name__ == '__main__':
         print('Stat error : '+str(e))
         pass
 
-    # try:
-    #     """ Corrélations des datas : pour choisir quelles features sont les + pertinentes """
+    try:
+        """ Corrélations des datas : pour choisir quelles features sont les + pertinentes """
 
-    #     snsPlot = sns.heatmap(df.corr().round(2),cmap='coolwarm',annot=True)
-    #     fig = snsPlot.get_figure()
-    #     fig.savefig("./Prediction/correlations.png")
-    # except Exception as e:
-    #     print('Correlation error : '+str(e))
-    #     pass
-
-    # try:
-    #     """ Moyenne (trait plein) et Mediane (pointillés) """
-
-    #     clr = ['blue', 'green', 'red', 'yellow', 'orange', 'purple']
-    #     plt.figure(1)
-    #     for i, var in enumerate(['ZN', 'CHAS', 'RM', 'DIS', 'B']): #, 'DIS', 'B'
-    #         sns.displot(df[var],  color = clr[i])
-    #         plt.axvline(df[var].mean(), color=clr[5], linestyle='solid', linewidth=2)
-    #         plt.axvline(df[var].median(), color=clr[5], linestyle='dashed', linewidth=2)
-    #         plt.savefig('./Prediction/{0}.png'.format(var))
-    # except Exception as e:
-    #     print('K Fold CV error : '+str(e))
-    #     pass
-
-    # # try:
-    # #     """ Scatter plots Prices vs fetures """
-    # #     for i, var in enumerate(['ZN', 'CHAS', 'RM', 'DIS', 'B']):
-    # #         fig1=[]
-    # #         lm = sns.regplot(df[var], prices, ax = None, color=clr[i])
-    # #         lm.set(ylim=(0, 100))
-    # #         fig1.append(lm.get_figure())
-    # #         fig1[0].savefig('./Prediction/{0}PriceTrend.png'.format(var))
-    # # except Exception as e:
-    # #     print('Scatter plots error : '+str(e))
-    # #     pass
+        snsPlot = sns.heatmap(df.corr().round(2),cmap='coolwarm',annot=True)
+        fig = snsPlot.get_figure()
+        fig.savefig("./Prediction/correlations.png")
+    except Exception as e:
+        print('Correlation error : '+str(e))
+        pass
 
     try:
+        """ K-Fold Cross Validation """
+
         SelectedFeatures=['RM', 'LSTAT', 'PTRATIO']
         X = df[SelectedFeatures]
         y = prices
@@ -131,6 +90,6 @@ if __name__ == '__main__':
         ax.set_ylabel('Predicted')
         plt.savefig('res.png')
     except Exception as e:
-        print(e)
+        print("K-Fold CV error : "+str(e))
         pass
     sys.exit(0)
