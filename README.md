@@ -20,6 +20,6 @@ MEDV     Median value of owner-occupied homes in $1000's
 ```
 
 ### Members :
+- Pierre Leriche (pierre.leriche@epitech.eu)
 - Quentin Payre (quentin.payre@epitech.eu)
 - Yoann Ditte (yoann.ditte@epitech.eu)
-- Pierre Leriche (pierre.leriche@epitech.eu)
