@@ -21,7 +21,7 @@ def main(args):
     selected_start = args.start if args.start and args.start >= 0 and args.start < len(
         df.index) else 0
     selected_end = args.end if args.end and args.end < len(
-        df.index) else len(df.index) - 1
+        df.index) else len(df.index)
 
     if args.ascending:
         df = df.sort_values(by=args.ascending.upper(), ascending=True)
