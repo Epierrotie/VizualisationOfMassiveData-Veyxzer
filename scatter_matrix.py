@@ -37,7 +37,7 @@ def main(args):
 
     title = 'Scatter matrix of the Boston Housing dataset, {} highlighted'.format(
         args.hue)
-    filename = 'housing_scatter_matrix.pdf'
+    filename = 'housing_scatter_matrix.png'
     plt.title(title)
     plt.savefig(filename)
 
@@ -68,5 +68,5 @@ if __name__ == "__main__":
     if args.start and args.end and args.start > args.end:
         parser.print_help(sys.stderr)
         exit(84)
-    print(args)
+
     main(args)
